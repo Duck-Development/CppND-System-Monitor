@@ -16,7 +16,7 @@ You are welcome to develop this project on your local machine, and you are not r
 
 Within the Udacity Workspace, `.student_bashrc` automatically installs ncurses every time you launch the Workspace.
 
-If you are not using the Workspace, install ncurses within your own Linux environment: `sudo apt install libncurses5-dev libncursesw5-dev`
+If you are not using the Workspace, install ncurses cmake clang-format within your own Linux environment: `sudo apt install libncurses5-dev libncursesw5-dev cmake clang-format`
 
 ## Make
 This project uses [Make](https://www.gnu.org/software/make/). The Makefile has four targets:
