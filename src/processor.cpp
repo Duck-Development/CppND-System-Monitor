@@ -12,6 +12,5 @@ float Processor::Utilization() {
         lastActive_ = newAktive;
         lastLoad_ = static_cast<float>(deltaAktive)/static_cast<float>(deltaTotal);
     }
-    return lastLoad_; 
-
+    return lastLoad_;
  }
