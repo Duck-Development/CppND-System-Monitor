@@ -36,7 +36,7 @@ string LinuxParser::OperatingSystem() {
 
 // DONE: An example of how to read data from the filesystem
 string LinuxParser::Kernel() {
-  string os, kernel, tmp ;
+  string os, kernel, tmp;
   string line;
   std::ifstream stream(kProcDirectory + kVersionFilename);
   if (stream.is_open()) {
@@ -67,33 +67,27 @@ vector<int> LinuxParser::Pids() {
   return pids;
 }
 
-// TODO: Read and return the system memory utilization
-float LinuxParser::MemoryUtilization() { 
-
-  string line , tmp ;
+float LinuxParser::MemoryUtilization() {
+  string line, tmp;
   float res = 0;
   long total, free;
   std::ifstream stream(kProcDirectory + kMeminfoFilename);
   if (stream.is_open()) {
     std::getline(stream, line);
     std::istringstream totalStream(line);
-    totalStream >> tmp  >> total;
+    totalStream >> tmp >> total;
     std::getline(stream, line);
     std::istringstream freeStream(line);
-    freeStream >> tmp  >> free;
+    freeStream >> tmp >> free;
 
-    res = static_cast<float>(total-free)/static_cast<float>(total);
-
+    res = static_cast<float>(total - free) / static_cast<float>(total);
   }
 
-return res; 
-
-
+  return res;
 }
 
 // TODO: Read and return the system uptime
-long LinuxParser::UpTime() { 
-
+long LinuxParser::UpTime() {
   float uptime = 0;
   string line;
   std::ifstream stream(kProcDirectory + kUptimeFilename);
@@ -104,7 +98,6 @@ long LinuxParser::UpTime() {
   }
 
   return (long)uptime;
-  
 }
 
 // TODO: Read and return the number of jiffies for the system
@@ -124,7 +117,22 @@ long LinuxParser::IdleJiffies() { return 0; }
 vector<string> LinuxParser::CpuUtilization() { return {}; }
 
 // TODO: Read and return the total number of processes
-int LinuxParser::TotalProcesses() { return 0; }
+int LinuxParser::TotalProcesses() {
+  string line;
+  string key;
+  int value = 0;
+  std::ifstream filestream(kProcDirectory + kStatFilename);
+  if (filestream.is_open()) {
+    while (std::getline(filestream, line)) {
+      std::istringstream linestream(line);
+      linestream >> key >> value;
+      if (key == "processes") {
+        break;
+      }
+    }
+  }
+  return value;
+}
 
 // TODO: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { return 0; }
