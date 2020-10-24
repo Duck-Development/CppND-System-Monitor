@@ -86,11 +86,8 @@ float LinuxParser::MemoryUtilization() {
   }
 
 return res; 
-
-
 }
 
-// TODO: Read and return the system uptime
 long LinuxParser::UpTime() { 
 
   float uptime = 0;
@@ -106,23 +103,57 @@ long LinuxParser::UpTime() {
   
 }
 
-// TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
+long LinuxParser::Jiffies()  { 
+  //cpu  35901 95 12512 570306 585 0 4211 0 0 0
+   string line;
+  string cpu;
+  long  user, nice, system, idle, iowait, irq, soft_irq,steal,guest,guest_nice;
+  std::ifstream filestream(kProcDirectory+kStatFilename);
+  if (filestream.is_open()) {
+    std::getline(filestream, line);
+    std::istringstream linestream(line);
+    linestream >> cpu >> user>> nice>> system>> idle>> iowait>> irq>> soft_irq>>steal>>guest>>guest_nice;
+  }
+  return user+ nice+ system+ idle+ irq+ soft_irq+steal+guest+guest_nice;
+ }
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid [[maybe_unused]]) { return 0; }
 
-// TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
 
-// TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
+long LinuxParser::ActiveJiffies()  { 
+  //cpu  35901 95 12512 570306 585 0 4211 0 0 0
+   string line;
+  string cpu;
+  long  user, nice, system, idle, iowait, irq, soft_irq,steal,guest,guest_nice;
+  std::ifstream filestream(kProcDirectory+kStatFilename);
+  if (filestream.is_open()) {
+    std::getline(filestream, line);
+    std::istringstream linestream(line);
+    linestream >> cpu >> user>> nice>> system>> idle>> iowait>> irq>> soft_irq>>steal>>guest>>guest_nice;
+  }
+  return user+ nice+ system+  irq+ soft_irq+steal+guest+guest_nice;
+ }
+
+
+long LinuxParser::IdleJiffies()  { 
+  //cpu  35901 95 12512 570306 585 0 4211 0 0 0
+   string line;
+  string cpu;
+  long  user, nice, system, idle, iowait, irq, soft_irq,steal,guest,guest_nice;
+  std::ifstream filestream(kProcDirectory+kStatFilename);
+  if (filestream.is_open()) {
+    std::getline(filestream, line);
+    std::istringstream linestream(line);
+    linestream >> cpu >> user>> nice>> system>> idle>> iowait>> irq>> soft_irq>>steal>>guest>>guest_nice;
+  }
+  return idle;
+ }
 
 // TODO: Read and return CPU utilization
 vector<string> LinuxParser::CpuUtilization() { return {}; }
 
-// TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { 
    string line;
   string key;
@@ -144,7 +175,6 @@ int LinuxParser::TotalProcesses() {
   return value;
  }
 
-// TODO: Read and return the number of running processes
 int LinuxParser::RunningProcesses() { 
    string line;
   string key;
