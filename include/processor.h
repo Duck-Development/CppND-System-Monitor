@@ -3,9 +3,7 @@
 
 class Processor {
  public:
-  float Utilization();  // TODO: See src/processor.cpp
-    
-  
+  float Utilization(); 
  private:
   long lastActive_{0};
   long lastTotal_{0};

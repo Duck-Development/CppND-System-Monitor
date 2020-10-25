@@ -16,7 +16,7 @@ using std::size_t;
 using std::string;
 using std::vector;
 
-// TODO: Return the system's CPU
+
 Processor& System::Cpu() { return cpu_; }
 
 vector<Process>& System::Processes() {
