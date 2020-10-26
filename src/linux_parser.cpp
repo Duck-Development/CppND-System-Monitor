@@ -116,9 +116,40 @@ long LinuxParser::Jiffies()  {
   return sum;
  }
 
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid [[maybe_unused]]) { return 0; }
+long LinuxParser::ActiveJiffies(int pid )
+{ 
+  string line;
+  string tmp;
+  long utime , stime , cutime , cstime;
+  std::ifstream filestream(kProcDirectory + to_string(pid) + kStatFilename);
+  if (filestream.is_open()) {
+    std::getline(filestream, line);
+    std::istringstream linestream(line);
+    for (auto i = 0 ; i < 18 ; i++)
+    {
+      switch (i)
+      {
+      case 14:
+        linestream >> utime;
+        break;
+      case 15:
+        linestream >> stime;
+        break;
+      case 16:
+        linestream >> cutime;
+        break;
+        case 17:
+        linestream >> cstime;
+        break;
+      
+      default:
+      linestream >> tmp;
+        break;
+      }
+    }
+  }
+  return utime+stime+cutime+cstime; 
+}
 
 
 long LinuxParser::ActiveJiffies()  { 
@@ -141,7 +172,7 @@ long LinuxParser::IdleJiffies()  {
   return res[kIdle_];
  }
 
-// TODO: Read and return CPU utilization
+
 vector<long> LinuxParser::CpuUtilization() { 
   //cpu  35901 95 12512 570306 585 0 4211 0 0 0
   string line;
