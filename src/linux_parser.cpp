@@ -125,7 +125,7 @@ long LinuxParser::ActiveJiffies(int pid )
   if (filestream.is_open()) {
     std::getline(filestream, line);
     std::istringstream linestream(line);
-    for (auto i = 0 ; i < 18 ; i++)
+    for (auto i = 1 ; i < 18 ; i++)
     {
       switch (i)
       {
