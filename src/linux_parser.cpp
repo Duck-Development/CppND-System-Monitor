@@ -307,7 +307,7 @@ long LinuxParser::UpTime(int pid) {
       linestream >> tmp;
     }
     linestream >> uptime;
-    uptime = uptime / sysconf(_SC_CLK_TCK);
+    uptime = UpTime() - (uptime / sysconf(_SC_CLK_TCK));
   }
   return uptime;
 }
