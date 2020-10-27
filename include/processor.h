@@ -3,7 +3,8 @@
 
 class Processor {
  public:
-  float Utilization(); 
+  float Utilization();
+
  private:
   long lastActive_{0};
   long lastTotal_{0};
